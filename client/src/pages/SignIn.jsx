@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	signInStart,
 	signInSuccess,
 	signInFailure,
 } from "../redux/user/userSlice.js";
-import { useSelector } from "react-redux";
+import OAuth from "../components/OAuth.jsx";
 
 export default function SignIn() {
+
 	const [formData, setFormData] = useState({});
-	const { loading , error } = useSelector(state => state.user);
+	const { loading, error } = useSelector((state) => state.user);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -33,6 +34,7 @@ export default function SignIn() {
 				body: JSON.stringify(formData),
 			});
 			const data = await res.json();
+			console.log(data);
 			if (data.success === false) {
 				dispatch(signInFailure(data.message));
 				return;
@@ -64,15 +66,16 @@ export default function SignIn() {
 				/>
 				<button
 					disabled={loading}
-					className="bg-slate-700 text-white uppercase rounded-lg p-3 hover:opacity-95 disabled:opacity-80"
+					className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
 				>
 					{loading ? "Loading..." : "Sign In"}
 				</button>
+				<OAuth />
 			</form>
 			<div className="flex gap-2 mt-5">
-				<p>Do not have an account ?</p>
-				<Link to={"/sign-up"}>
-					<span className="text-blue-700">Sign Up</span>
+				<p>Dont have an account?</p>
+				<Link to={"/signup"}>
+					<span className="text-blue-700">Sign up</span>
 				</Link>
 			</div>
 			{error && <p className="text-red-500 mt-5">{error}</p>}

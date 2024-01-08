@@ -2,18 +2,22 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   username: {
-    type: 'string',
+    type: String,
     required: true,
     unique: true
   },
   password: {
-    type: 'string',
+    type: String,
     required: true
   },
   email: {
-    type: 'string',
+    type: String,
     required: true,
     unique: true
+  },
+  avatar: {
+    type: String,
+    default: "https://www.shutterstock.com/image-vector/vector-flat-illustration-grayscale-avatar-600nw-2264922221.jpg"
   }
 }, { timestamps: true });
 
