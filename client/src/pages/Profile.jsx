@@ -17,7 +17,7 @@ import {
 	signOutUserStart,
 } from "../redux/user/userSlice.js";
 import { useDispatch } from "react-redux";
-
+import { Link } from "react-router-dom";
 export default function Profile() {
 	const { currentUser, loading, error } = useSelector((state) => state.user);
 	const fileRef = useRef(null);
@@ -112,11 +112,10 @@ export default function Profile() {
 				return;
 			}
 			dispatch(deleteUserSuccess(data.message));
-		} 
-		catch (error) {
+		} catch (error) {
 			dispatch(deleteUserFailure(error.message));
 		}
-	}
+	};
 
 	return (
 		<div className="p-3 max-w-lg mx-auto">
@@ -176,6 +175,12 @@ export default function Profile() {
 				>
 					{loading ? "Loading..." : "Update"}
 				</button>
+				<Link
+					className="uppercase bg-green-700 text-white p-3 rounded-lg text-center hover:opacity-95"
+					to={"/create-listing"}
+				>
+					Create Listing
+				</Link>
 			</form>
 			<div className="flex justify-between mt-5">
 				<span
@@ -184,7 +189,9 @@ export default function Profile() {
 				>
 					Delete Account
 				</span>
-				<span onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign Out</span>
+				<span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+					Sign Out
+				</span>
 			</div>
 			<p className="text-green-700 mt-5">
 				{updateSuccess ? "User is updated successfully" : ""}
